@@ -31,8 +31,7 @@ public class FileOutputFilterListener implements StatusListener {
 	@Override
 	public void onException(Exception arg0) {
 		arg0.printStackTrace();
-		log.error(arg0.getMessage());
-		log.error(arg0.getStackTrace());
+		log.error("Twitter Exception", arg0);
 	}
 
 	@Override
@@ -46,6 +45,7 @@ public class FileOutputFilterListener implements StatusListener {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error("Status Error", e)
 		}
 
 	}

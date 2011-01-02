@@ -1,7 +1,7 @@
 package net.davidrenz.twitter.parser.stream.filter;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -25,15 +25,31 @@ public class FilterStreamParserDriver {
 		// Create a FilterStreamParser object 
 		FilterStreamParser parser = new FilterStreamParser(PropertyUtil.getProperyFile().getProperty("twitter.screenname"),PropertyUtil.getProperyFile().getProperty("twitter.password"), listener);
 		
+
+		System.out.println(PropertyUtil.getProperyFile().getProperty("file.keywords"));
 		
 		// Acquire keywords for input to the filter stream
 		// read in each keyword from a file
-		keywords.add("twitter");
+		BufferedReader br = new BufferedReader(new FileReader(PropertyUtil.getProperyFile().getProperty("file.keywords")));
+		String line = null;
 		
+		while ((line = br.readLine()) != null){
+			keywords.add(line.trim());
+		}
+		
+		br.close();
+		
+		
+		br = new BufferedReader(new FileReader(PropertyUtil.getProperyFile().getProperty("file.users")));
+		
+
 		// Acquire users for input to the filter stream
 		// read each user id from the user ids file
-		users.add(0);
-		
+		while ((line = br.readLine()) != null){
+			users.add(new Integer(line.trim()));
+		}
+		br.close();
+
 		// Kick off parser
 		try{
 			parser.filter(keywords, users);
@@ -42,5 +58,8 @@ public class FilterStreamParserDriver {
 		}
 
 	}
+	
+
+	
 	
 }
