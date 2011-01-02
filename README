@@ -1,0 +1,3 @@
+To run the example, execute 'ant run'
+
+To store tweets in a database, create a new class that implements FilterListener; FileOutputFilterListener is an example. 
